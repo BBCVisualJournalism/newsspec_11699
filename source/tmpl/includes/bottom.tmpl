@@ -1,0 +1,126 @@
+<%
+if (scaffoldLite) {
+%>
+    <%= inlineLiteJs() %>
+<%
+} else {
+%>
+    <div class="footer"><div class="footer--logo"></div></div>
+    <script>
+        var browserType = null;
+
+        if ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window) {
+            browserType = 'html5';
+        }
+        else if (document.documentMode && (document.documentMode < 9)) {
+            browserType = 'legacyie';
+        }
+
+        if (browserType) {
+            var iframeUID = '<%= iframeUid %>',
+                debugMode = setDebugMode(),
+                done      = false,
+                script    = document.createElement('script');
+
+            onEvent(window, 'message', function (e) {
+                var parsedData = getObjectNotationFromDataString(e.data);
+                if (parsedData.isInitData) { 
+                    if (!parsedData.onBbcDomain) {
+		                document.documentElement.className = document.documentElement.className.replace('onbbcdomain', '');
+                    }
+
+
+                    var settings  = getSettings(browserType, debugMode, parsedData.bbcRequireMap);
+
+                    script.src = "<%= pathStatic %>/<%= vocab_dir %>/js/lib/vendors/require/require-2.1.0.js";
+                    script.type = "text/javascript";
+                    script.onload = script.onreadystatechange = function() {
+                        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") ) {
+                            done = true;
+                            define('appInitData', parsedData);
+                            console.log(parsedData);
+                            require.config(settings.requireConfig);
+                            require([settings.moduleToStartApp], function () {
+                                require(['app'], function (app) {});
+                            });
+                        }
+                    }
+                    document.body.appendChild(script);
+                }
+            });
+
+            var message = {
+                iframeHasLoaded: true
+            };
+            window.parent.postMessage(iframeUID + '::' + JSON.stringify(message), '*');
+        }
+        
+        function getObjectNotationFromDataString(data) {
+            return JSON.parse(data.split('::')[1]);
+        }
+
+        function setDebugMode() {
+            var debugForced = window.location.href.match(/debug=true/);
+            if (debugForced) {
+                return true;
+            }
+            return <%= debug %>;
+        }
+
+        function onEvent(domElement, eventName, callback, useCapture) {
+            if (useCapture === undefined) {
+                useCapture = false;
+            }
+
+            if (domElement.addEventListener) {
+                domElement.addEventListener(eventName, callback, useCapture);
+            } else {
+                domElement.attachEvent('on' + eventName, callback);
+            }
+        }
+
+
+        function mergeObjectsRecursive(obj1, obj2) {
+            for (var p in obj2) {
+                try {
+                    // Property in destination object set; update its value.
+                    if ( obj2[p].constructor==Object ) {
+                        obj1[p] = mergeObjectsRecursive(obj1[p], obj2[p]);
+                    } else {
+                        obj1[p] = obj2[p];
+                    }
+                } catch(e) {
+                    // Property in destination object not set; create it and set its value.
+                    obj1[p] = obj2[p];
+                }
+            }
+
+            return obj1;
+        }
+
+        function getSettings(browserType, debug, bbcRequireMap) {
+            var config = {
+                    urlArgs: "v=<%= version %>",
+                    baseUrl: "<%= pathStatic %>/<%= vocab_dir %>/js/",
+                    paths: bbcRequireMap
+                },
+                moduleToStartApp = '<%= pathStatic %>/<%= vocab_dir %>/js/all-'+browserType+'.js';
+
+            if (debug) {
+                var jqueryVersion   = (browserType === 'html5') ? 'jquery-2.0.3' : 'jquery-1.9.1';
+                config.paths        = mergeObjectsRecursive(config.paths, <%= amdModulePaths %>);
+                config.paths.jquery = './lib/vendors/jquery/' + jqueryVersion;
+                config.paths.app    = './app';
+                moduleToStartApp    = '<%= pathStatic %>/<%= vocab_dir %>/js/app.js';
+            }
+            return {
+                requireConfig: config,
+                moduleToStartApp: moduleToStartApp
+            };
+        }
+    </script>
+<%
+}
+%>
+</body>
+</html>

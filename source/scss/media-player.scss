@@ -1,0 +1,48 @@
+.media-container-overflow-wrapper{
+    overflow: hidden;
+}
+.media-container {
+    overflow: visible;
+    height: 0;
+    width: 100%;
+    padding-bottom: 56.25%;
+    padding-top: 90px;
+    position: relative;
+
+    .media-player{
+        position: absolute;
+        top: -90px;
+        left: 0;
+        width: 100%;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+.overlay-layers{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 90px;
+    z-index: 10;
+
+    .overlay-layer{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.media-player--button{
+    position: absolute;
+    display: block;
+    bottom: 13px;
+    left: 35%;
+    right: 35%;
+    background-color: #017F7E;
+    color: #FFF;
+    font: 700 24px Arial;
+    padding: 12px 0;
+    width: 30%;
+    border: 1px solid rgba(255, 255, 255, 0.27);
+}

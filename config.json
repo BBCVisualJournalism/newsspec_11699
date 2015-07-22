@@ -1,0 +1,13 @@
+{
+  "debug":          "false",
+  "whichEnv":       "local",
+  "scaffoldLite":   "false",
+  "project_number": "11699",
+  "year":           "2015",
+  "imageWidths":    ["320", "640", "1024"],
+  "services": {
+    "default": "english",
+    "others":  "*"
+  },
+  "iframeUid": "newsspec__11699_1"
+}
