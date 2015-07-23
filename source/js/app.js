@@ -1,4 +1,4 @@
-define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller', 'appInitData', 'bump-3', 'videoMarkers'], function (news, ShareTools, appInitData, $, videoMarkerData) {
+define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller', 'appInitData', 'bump-3', 'videoMarkers', 'lightboxHandler'], function (news, ShareTools, appInitData, $, videoMarkerData, lightboxHandler) {
 
     function addIdsToVideoMarkers(markersArray) {
         for (var i = 0; i < markersArray.length; i++) {
@@ -11,6 +11,7 @@ define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller',
         product : 'news',
         responsive: true,
         insideIframe: true,
+        quality: 'high',
         autoplay: true,
         playlistObject: {
             items: [{
@@ -71,5 +72,10 @@ define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller',
     });
 
     news.sendMessageToremoveLoadingImage();
+
+    news.pubsub.emit('lightbox:open', {
+        title: 'The is a test',
+        messageMarkup: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non quam tincidunt, varius diam a, pellentesque elit. Etiam id consectetur magna. Sed eleifend et quam mattis vehicula. <strong>Nullam in erat dictum</strong>, venenatis massa ut, mollis sem. Donec pulvinar nisl non sem rutrum, nec iaculis mi venenatis. Vivamus elit neque, ullamcorper nec ultrices a, sodales et arcu. Cras sed dui tempus erat commodo facilisis ac a ligula. Suspendisse eu tellus at mauris condimentum venenatis non nec velit. Vestibulum accumsan nibh dictum lorem molestie vehicula. Sed luctus velit nulla, eu sagittis turpis hendrerit non. Nunc a malesuada mi.'
+    });
 
 });

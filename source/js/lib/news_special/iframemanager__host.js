@@ -1,7 +1,26 @@
 (function () {
 
     var IframeWatcher = function () {
-        var requireMap = ((typeof(bbcRequireMap) !== 'undefined')) ? bbcRequireMap : {};
+
+        var fallbackRequireMap = {
+            'jquery-1': 'http://static.bbci.co.uk/frameworks/jquery/0.3.0/sharedmodules/jquery-1.7.2',
+            'jquery-1.4': 'http://static.bbci.co.uk/frameworks/jquery/0.3.0/sharedmodules/jquery-1.4',
+            'jquery-1.9': 'http://static.bbci.co.uk/frameworks/jquery/0.3.0/sharedmodules/jquery-1.9.1',
+            'swfobject-2': 'http://static.bbci.co.uk/frameworks/swfobject/0.1.10/sharedmodules/swfobject-2',
+            'demi-1': 'http://static.bbci.co.uk/frameworks/demi/0.10.0/sharedmodules/demi-1',
+            'gelui-1': 'http://static.bbci.co.uk/frameworks/gelui/0.9.13/sharedmodules/gelui-1',
+            'cssp!gelui-1/overlay': 'http://static.bbci.co.uk/frameworks/gelui/0.9.13/sharedmodules/gelui-1/overlay.css',
+            'istats-1': 'http://static.bbci.co.uk/frameworks/istats/0.26.31/modules/istats-1',
+            'relay-1': 'http://static.bbci.co.uk/frameworks/relay/0.2.6/sharedmodules/relay-1',
+            'clock-1': 'http://static.bbci.co.uk/frameworks/clock/0.1.9/sharedmodules/clock-1',
+            'canvas-clock-1': 'http://static.bbci.co.uk/frameworks/clock/0.1.9/sharedmodules/canvas-clock-1',
+            'cssp!clock-1': 'http://static.bbci.co.uk/frameworks/clock/0.1.9/sharedmodules/clock-1.css',
+            'jssignals-1': 'http://static.bbci.co.uk/frameworks/jssignals/0.3.6/modules/jssignals-1',
+            'jcarousel-1': 'http://static.bbci.co.uk/frameworks/jcarousel/0.1.10/modules/jcarousel-1',
+            'bump-3': '//emp.bbci.co.uk/emp/bump-3/bump-3'
+        };
+
+        var requireMap = ((typeof(bbcRequireMap) !== 'undefined')) ? bbcRequireMap : fallbackRequireMap;
 
         var self = this;
         this.linkId       = '<%= iframeUid %>';
