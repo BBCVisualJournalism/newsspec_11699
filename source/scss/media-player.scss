@@ -19,30 +19,19 @@
     }
 }
 
-.overlay-layers{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    bottom: 90px;
-    z-index: 10;
-
-    .overlay-layer{
-        width: 100%;
-        height: 100%;
-    }
-}
-
 .media-player--button{
     position: absolute;
     display: block;
     bottom: 13px;
-    left: 35%;
-    right: 35%;
+    right: 2%;
+    outline: 0;
     background-color: #017F7E;
     color: #FFF;
-    font: 700 24px Arial;
-    padding: 12px 0;
-    width: 30%;
-    border: 1px solid rgba(255, 255, 255, 0.27);
+    font: bold 16px Arial;
+    line-height: 22px;
+    padding: 12px;
+    border: 2px solid #fff;
+}
+.media-player--resume-button{
+    display: none;
 }

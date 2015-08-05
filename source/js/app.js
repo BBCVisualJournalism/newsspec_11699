@@ -50,7 +50,8 @@ define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller',
         if (!mediaPlayer.paused()) {
             mediaPlayer.pause();
         }
-        news.$('.overlay-layer').show();
+        news.$('.overlay-layer--' + e.id).fadeIn(600);
+        news.$('.media-player--resume-button').fadeIn(600);
     });
 
     mediaPlayer.bind('markerEnd', function (e) {
@@ -68,14 +69,17 @@ define(['lib/news_special/bootstrap', 'lib/news_special/share_tools/controller',
 
     news.$('.media-player--resume-button').on('click', function () {
         mediaPlayer.play();
-        news.$('.overlay-layer').hide();
+        news.$('.overlay-layer').fadeOut(800);
+        news.$('.media-player--resume-button').fadeOut(600);
     });
 
     news.sendMessageToremoveLoadingImage();
 
-    news.pubsub.emit('lightbox:open', {
-        title: 'The is a test',
-        messageMarkup: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non quam tincidunt, varius diam a, pellentesque elit. Etiam id consectetur magna. Sed eleifend et quam mattis vehicula. <strong>Nullam in erat dictum</strong>, venenatis massa ut, mollis sem. Donec pulvinar nisl non sem rutrum, nec iaculis mi venenatis. Vivamus elit neque, ullamcorper nec ultrices a, sodales et arcu. Cras sed dui tempus erat commodo facilisis ac a ligula. Suspendisse eu tellus at mauris condimentum venenatis non nec velit. Vestibulum accumsan nibh dictum lorem molestie vehicula. Sed luctus velit nulla, eu sagittis turpis hendrerit non. Nunc a malesuada mi.'
-    });
+    /*
+     *news.pubsub.emit('lightbox:open', {
+     *    title: 'The is a test',
+     *    messageMarkup: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non quam tincidunt, varius diam a, pellentesque elit. Etiam id consectetur magna. Sed eleifend et quam mattis vehicula. <strong>Nullam in erat dictum</strong>, venenatis massa ut, mollis sem. Donec pulvinar nisl non sem rutrum, nec iaculis mi venenatis. Vivamus elit neque, ullamcorper nec ultrices a, sodales et arcu. Cras sed dui tempus erat commodo facilisis ac a ligula. Suspendisse eu tellus at mauris condimentum venenatis non nec velit. Vestibulum accumsan nibh dictum lorem molestie vehicula. Sed luctus velit nulla, eu sagittis turpis hendrerit non. Nunc a malesuada mi.'
+     *});
+     */
 
 });

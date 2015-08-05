@@ -203,6 +203,7 @@
 
         getAnyInstructionsFromIframe: function () {
             if (this.data.hostPageCallback) {
+                console.log(this.data);
                 /* jshint evil:true */
                 (new Function(this.data.hostPageCallback)());
             }
